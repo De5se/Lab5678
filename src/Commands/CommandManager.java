@@ -28,8 +28,8 @@ public class CommandManager {
     Help help = new Help(commands);
 
     public void startProggram(String fileName) {
-        save.setFileName("C:\\Users\\VID\\IdeaProjects\\Lab5\\src\\data.CSV");
-        //save.importCollection();
+        save.setFileName(fileName);
+        save.importCollection();
 
         Scanner scanner = new Scanner(System.in);
 

@@ -3,17 +3,18 @@ package Commands;
 import CollectionClasses.Collection;
 import CollectionClasses.LabWork;
 import com.opencsv.CSVReader;
+import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.enums.CSVReaderNullFieldIndicator;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,10 +31,11 @@ public class Save extends AbstractCommand {
     }
 
     public void importCollection() {
-        while (fileName == null){
-            System.out.println("Путь к файлу не задан, введите его здесь: ");
-            fileName = scanner.nextLine();
+        if (fileName == null){
+            System.out.println("Путь к файлу не задан");
+            return;
         }
+
 
         try (CSVReader csvReader = new CSVReader(new FileReader(fileName))) {
             List<LabWork> list = new CsvToBeanBuilder<LabWork>(csvReader).withType(LabWork.class).withFieldAsNull(CSVReaderNullFieldIndicator.EMPTY_SEPARATORS).build().parse();
@@ -41,24 +43,23 @@ public class Save extends AbstractCommand {
         } catch (IOException fileNotFoundException) {
             System.out.println("Файл не найден");
         }
+            catch (ValueException e){
+            System.out.println("Неверные значения в файле!");
+        }
     }
 
     public void execute(){
-        while (fileName == null){
-            System.out.println("Путь к файлу не задан, введите его здесь: ");
-            fileName = scanner.nextLine();
+        if (fileName == null){
+            System.out.println("Путь к файлу не задан");
         }
 
-        ArrayList<LabWork> list = new ArrayList<LabWork>(Collection.hashSet);
+        ArrayList<LabWork> list = new ArrayList<LabWork>();
+        list.addAll(Collection.hashSet);
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName))) {
             new StatefulBeanToCsvBuilder<LabWork>(bufferedWriter).build().write(list);
         }
-        catch (IOException e){
-            System.out.println("Ошибка в файле");
-        }
-        catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e) {
-            System.out.println("Ошибка записи дыннх");
-        }
+        catch (IOException e){System.out.println("Ошибка в файле");}
+        catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e){System.out.println("Ошибка записи дыннх");}
 
     }
 }
