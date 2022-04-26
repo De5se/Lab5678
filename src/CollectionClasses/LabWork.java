@@ -6,8 +6,6 @@ import com.opencsv.bean.CsvRecurse;
 
 import java.util.Date;
 
-
-
 public class LabWork {
     @CsvBindByName
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
@@ -58,6 +56,7 @@ public class LabWork {
     public LabWork(){
 
     }
+
 }
 
 

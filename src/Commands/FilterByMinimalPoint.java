@@ -1,41 +1,27 @@
 package Commands;
 
-import CollectionClasses.Collection;
 import CollectionClasses.LabWork;
 
-import java.util.Scanner;
+import java.util.HashSet;
 
-public class FilterByMinimalPoint extends AbstractCommand {
-
+public class FilterByMinimalPoint extends Command {
+    private  double targetMinimalPoint = -1;
     public FilterByMinimalPoint() {
         super("filter_by_minimal_point", "вывести элементы, значение поля minimalPoint которых равно заданному");
     }
 
-    Scanner scanner = new Scanner(System.in);
+    public FilterByMinimalPoint(double targetMinimalPoint) {
+        super("filter_by_minimal_point", "вывести элементы, значение поля minimalPoint которых равно заданному");
+        this.targetMinimalPoint = targetMinimalPoint;
+    }
 
-    public void execute()
+    public String execute(HashSet<LabWork> labWorks)
     {
-        System.out.println("Введите minimal point: ");
-        double targetMinimalPoint = -1;
-        while (targetMinimalPoint < 0 ) {
-            try {
-                targetMinimalPoint = scanner.nextDouble();
-            } catch (Exception exception) {
-                System.out.println("Некорректные данные");
-                scanner.nextLine();
-            }
-        }
-
-        int amountOfelements = 0;
-
-        for (LabWork it : Collection.hashSet) {
+        for (LabWork it : labWorks) {
             if (it.GetMinimalPoint() == targetMinimalPoint){
-                amountOfelements++;
-                System.out.println(it.toString());
+                return it.toString();
             }
         }
-        if (amountOfelements == 0){
-            System.out.println("В коллекции нет элементов, значение поля minimalPoint которых равно заданному");
-         }
+        return "В коллекции нет элементов, значение поля minimalPoint которых равно заданному";
     }
 }

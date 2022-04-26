@@ -1,9 +1,16 @@
 package Commands;
 
-import CollectionClasses.Collection;
 import CollectionClasses.LabWork;
 
-public class RemoveGreater extends AbstractCommand {
+import java.util.HashSet;
+
+public class RemoveGreater extends Command {
+    private LabWork labWork;
+
+    public RemoveGreater(LabWork labWork) {
+        super("remove_by_id", "удалить из коллекции все элементы, превышающие заданный");
+        this.labWork = labWork;
+    }
 
     public RemoveGreater() {
         super("remove_by_id", "удалить из коллекции все элементы, превышающие заданный");
@@ -11,12 +18,11 @@ public class RemoveGreater extends AbstractCommand {
 
     LabWorkCmp labWorkCmp = new LabWorkCmp();
 
-
-    public void execute()
+    public String execute(HashSet<LabWork> labWorks)
     {
         LabWork labWork = InputLabWork.InputLabWork();
 
-        Collection.hashSet.removeIf(it -> labWorkCmp.isMore(it, labWork));
-        System.out.println("Операция завершена");
+        labWorks.removeIf(it -> labWorkCmp.isMore(it, labWork));
+        return "Операция завершена";
     }
 }

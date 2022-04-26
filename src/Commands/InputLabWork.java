@@ -9,7 +9,6 @@ public class InputLabWork{
 
     static Scanner scanner = new Scanner(System.in);
 
-
     public static  LabWork InputLabWork()
     {
         String name = null;

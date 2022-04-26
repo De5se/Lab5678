@@ -1,13 +1,16 @@
 package Commands;
 
+import CollectionClasses.LabWork;
+
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 
-abstract class AbstractCommand{
+public class Command implements Serializable {
     private final String name;
     private final String description;
 
-
-    public AbstractCommand(String name, String description){
+    public Command(String name, String description){
         this.name = name;
         this.description = description;
     }
@@ -21,12 +24,20 @@ abstract class AbstractCommand{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AbstractCommand that = (AbstractCommand) o;
+        Command that = (Command) o;
         return name.equals(that.name) && description.equals(that.description);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(name, description);
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String execute(HashSet<LabWork> labWorks){
+        return "";
     }
 }

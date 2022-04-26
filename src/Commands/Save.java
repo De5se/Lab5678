@@ -1,11 +1,8 @@
 package Commands;
 
-import CollectionClasses.Collection;
 import CollectionClasses.LabWork;
 import com.opencsv.CSVReader;
-import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.enums.CSVReaderNullFieldIndicator;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
@@ -18,7 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
-public class Save extends AbstractCommand {
+public class Save extends Command {
     public Save() {
         super("save", "сохранить коллекцию в файл");
     }
@@ -30,16 +27,15 @@ public class Save extends AbstractCommand {
         this.fileName = fileName;
     }
 
-    public void importCollection() {
+    public void importCollection(HashSet<LabWork> labWorks) {
         if (fileName == null){
             System.out.println("Путь к файлу не задан");
             return;
         }
 
-
         try (CSVReader csvReader = new CSVReader(new FileReader(fileName))) {
             List<LabWork> list = new CsvToBeanBuilder<LabWork>(csvReader).withType(LabWork.class).withFieldAsNull(CSVReaderNullFieldIndicator.EMPTY_SEPARATORS).build().parse();
-            Collection.hashSet.addAll(list);
+            labWorks.addAll(list);
         } catch (IOException fileNotFoundException) {
             System.out.println("Файл не найден");
         }
@@ -48,13 +44,13 @@ public class Save extends AbstractCommand {
         }
     }
 
-    public void execute(){
+    public void save(HashSet<LabWork> labWorks){
         if (fileName == null){
             System.out.println("Путь к файлу не задан");
         }
 
         ArrayList<LabWork> list = new ArrayList<LabWork>();
-        list.addAll(Collection.hashSet);
+        list.addAll(labWorks);
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName))) {
             new StatefulBeanToCsvBuilder<LabWork>(bufferedWriter).build().write(list);
         }

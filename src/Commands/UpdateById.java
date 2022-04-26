@@ -2,30 +2,32 @@ package Commands;
 
 import CollectionClasses.*;
 
-import java.util.Date;
+import java.util.HashSet;
 import java.util.Scanner;
 
-public class UpdateById extends AbstractCommand {
+public class UpdateById extends Command {
+    private int id;
+    private LabWork labWorkToAdd;
 
-    Scanner scanner = new Scanner(System.in);
+    public UpdateById(int id, LabWork labWorkToAdd) {
+        super("update", "обновить значение элемента коллекции, id которого равен заданному");
+        this.id = id;
+        this.labWorkToAdd = labWorkToAdd;
+    }
 
     public UpdateById() {
         super("update", "обновить значение элемента коллекции, id которого равен заданному");
     }
 
-
-    public void execute(Add add)
+    public String execute(HashSet<LabWork> labWorks)
     {
-        System.out.println("Введите id:");
-        int id = scanner.nextInt();
-
-        for (LabWork it: Collection.hashSet){
+        for (LabWork it: labWorks){
             if (it.GetId() == id){
-                Collection.hashSet.remove(it);
-                add.execute();
-                return;
+                labWorks.remove(it);
+                labWorks.add(labWorkToAdd);
+                return "Операция завершена";
             }
         }
-        System.out.println("Элемента с таким id нет");
+        return  ("Элемента с таким id нет");
     }
 }

@@ -2,25 +2,22 @@ package Commands;
 
 import CollectionClasses.*;
 
-import java.util.Scanner;
-import java.util.Date;
+import java.util.HashSet;
 
-public class Add extends AbstractCommand {
+public class Add extends Command {
+    private LabWork labWorkToAdd;
 
-    Scanner scanner = new Scanner(System.in);
-
-    public Add() {
+    public Add(LabWork labWorkToAdd) {
+        super("add", "добавить новый элемент в коллекцию");
+        this.labWorkToAdd = labWorkToAdd;
+    }
+    public Add(){
         super("add", "добавить новый элемент в коллекцию");
     }
 
-
-    public void execute()
+    public String execute(HashSet<LabWork> labWorks)
     {
-        LabWork labWork = InputLabWork.InputLabWork();
-
-        Collection.hashSet.add(labWork);
-
-
-        System.out.println("Коллекция добавлена");
+        labWorks.add(labWorkToAdd);
+        return "Коллекция добавлена";
     }
 }

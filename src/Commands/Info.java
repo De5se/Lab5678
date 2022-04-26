@@ -1,10 +1,11 @@
 package Commands;
 
-import CollectionClasses.Collection;
+import CollectionClasses.LabWork;
 
 import java.util.Date;
+import java.util.HashSet;
 
-public class Info extends AbstractCommand {
+public class Info extends Command {
 
     private Date initDate;
 
@@ -14,10 +15,10 @@ public class Info extends AbstractCommand {
         initDate = new Date();
     }
 
-    public void execute()
+    public String execute(HashSet<LabWork> labWorks)
     {
-        System.out.println("Тип коллекции:" + Collection.hashSet.getClass() +
+        return  ("Тип коллекции:" + labWorks.getClass() +
                 "\nДата инициализации: " + initDate +
-                "\nКоличество элементов: " + Collection.hashSet.size());
+                "\nКоличество элементов: " + labWorks.size());
     }
 }

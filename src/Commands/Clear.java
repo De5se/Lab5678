@@ -1,14 +1,16 @@
 package Commands;
 
-import CollectionClasses.Collection;
+import CollectionClasses.LabWork;
 
-public class Clear extends AbstractCommand {
+import java.util.HashSet;
+
+public class Clear extends Command {
     public Clear() {
         super("clear", "очистить коллекцию");
     }
 
-    public void execute() {
-        Collection.hashSet.clear();
-        System.out.println("Коллекция очищена");
+    public String execute(HashSet<LabWork> labWorks) {
+        labWorks.clear();
+        return  ("Коллекция очищена");
     }
 }

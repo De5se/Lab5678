@@ -2,26 +2,30 @@ package Commands;
 
 import CollectionClasses.*;
 
+import java.util.HashSet;
 import java.util.Scanner;
 
-public class AddIfMin extends AbstractCommand {
+public class AddIfMin extends Command {
+    private LabWork labWorkToAdd;
 
-    Scanner scanner = new Scanner(System.in);
+    public AddIfMin(LabWork labWorkToAdd) {
+        super("add_if_min", "добавить новый элемент в коллекцию, если его значение меньше, чем у наименьшего элемента этой коллекции");
+        this.labWorkToAdd = labWorkToAdd;
+    }
 
-    public AddIfMin() {
+    public AddIfMin(){
         super("add_if_min", "добавить новый элемент в коллекцию, если его значение меньше, чем у наименьшего элемента этой коллекции");
     }
+
     LabWorkCmp labWorkCmp = new LabWorkCmp();
-
-    public void execute()
-    {
-        LabWork labWork = InputLabWork.InputLabWork();
-
-        for (LabWork it : Collection.hashSet){
-            if (labWorkCmp.isMore(labWork, it)){
-                System.out.println("Элемент не добавлен");
-                return;
+    public String execute(HashSet<LabWork> labWorks){
+        for (LabWork it : labWorks){
+            if (labWorkCmp.isMore(labWorkToAdd, it)){
+                return "Коллекция не добавлена";
             }
         }
+
+        labWorks.add(labWorkToAdd);
+        return "Коллекция добавлена";
     }
 }

@@ -1,14 +1,15 @@
 package Commands;
 
-import static java.lang.System.exit;
+import CollectionClasses.LabWork;
 
-public class Exit extends AbstractCommand {
+import java.util.HashSet;
+
+public class Exit extends Command {
     public Exit() {
-        super("exit", "завершить программу (без сохранения в файл)");
+        super("exit", "завершить программу ");
     }
 
-    public void execute() {
-        System.out.println("Пока");
-        exit(0);
+    public String execute(HashSet<LabWork> labWorks)  {
+        return "Пока";
     }
 }

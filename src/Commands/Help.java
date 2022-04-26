@@ -1,20 +1,25 @@
 package Commands;
 
-public class Help extends AbstractCommand {
-    AbstractCommand[] commands;
+import CollectionClasses.LabWork;
 
+import java.util.HashSet;
 
-    public Help(AbstractCommand[] commands) {
+public class Help extends Command {
+    Command[] commands;
+
+    public Help(Command[] commands) {
         super("help", "вывести справку по доступным командам");
         this.commands = commands;
     }
 
-    public void execute()
+    public String execute(HashSet<LabWork> labWorks)
     {
-        System.out.println(this.toString());
+        StringBuilder answer = new StringBuilder(this.toString() + '\n');
 
-        for (AbstractCommand command : commands) {
-            System.out.println(command.toString());
+        for (Command command : commands) {
+            answer.append(command.toString()).append('\n');
         }
+
+        return answer.toString();
     }
 }

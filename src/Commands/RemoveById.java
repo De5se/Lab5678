@@ -1,30 +1,29 @@
 package Commands;
 
-import CollectionClasses.Collection;
 import CollectionClasses.LabWork;
 
-import java.util.Scanner;
+import java.util.HashSet;
 
-public class RemoveById extends AbstractCommand {
+public class RemoveById extends Command {
+    private int id;
+
+    public RemoveById(int id) {
+        super("remove_by_id", "удалить элемент из коллекции по его id");
+        this.id = id;
+    }
 
     public RemoveById() {
         super("remove_by_id", "удалить элемент из коллекции по его id");
     }
 
-    public void execute()
+    public String execute(HashSet<LabWork> labWorks)
     {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите id:");
-        int id = scanner.nextInt();
-
-        for (LabWork it: Collection.hashSet){
+        for (LabWork it: labWorks){
             if (it.GetId() == id){
-                Collection.hashSet.remove(it);
-                System.out.println("Элемент удален");
-                return;
+                labWorks.remove(it);
+                return  "Элемент удален";
             }
         }
-
-        System.out.println("Элемента с таким id нет");
+        return  "Элемента с таким id нет";
     }
 }

@@ -1,23 +1,26 @@
 package Commands;
 
-import CollectionClasses.Collection;
 import CollectionClasses.LabWork;
 
-public class Show extends AbstractCommand {
+import java.util.HashSet;
+
+public class Show extends Command {
 
     public Show() {
         super("show", "вывести в стандартный поток вывода все элементы коллекции в строковом представлении");
     }
 
-    public void execute()
+    public String execute(HashSet<LabWork> labWorks)
     {
-        if (Collection.hashSet.size() == 0){
-            System.out.println("В коллекции нет элементов");
-            return;
+        if (labWorks.size() == 0){
+            return "В коллекции нет элементов";
         }
 
-        for (LabWork it : Collection.hashSet){
-            System.out.println(it.toString());
+        StringBuilder answer = new StringBuilder();
+        for (LabWork it : labWorks){
+            answer.append(it.toString());
         }
+
+        return answer.toString();
     }
 }

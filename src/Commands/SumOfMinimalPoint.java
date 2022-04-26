@@ -1,22 +1,23 @@
 package Commands;
 
-import CollectionClasses.Collection;
 import CollectionClasses.LabWork;
 
-public class SumOfMinimalPoint extends AbstractCommand {
+import java.util.HashSet;
+
+public class SumOfMinimalPoint extends Command {
 
     public SumOfMinimalPoint() {
         super("show", "вывести в стандартный поток вывода все элементы коллекции в строковом представлении");
     }
 
-    public void execute()
+    public String execute(HashSet<LabWork> labWorks)
     {
         double sumOfMinimalPoint = 0;
 
-        for (LabWork it : Collection.hashSet){
+        for (LabWork it : labWorks){
             sumOfMinimalPoint += it.GetMinimalPoint();
         }
 
-        System.out.println(sumOfMinimalPoint);
+        return String.valueOf(sumOfMinimalPoint);
     }
 }
