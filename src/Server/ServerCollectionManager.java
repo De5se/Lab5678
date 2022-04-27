@@ -4,6 +4,7 @@ import CollectionClasses.CollectionData;
 import CollectionClasses.LabWork;
 import Commands.Command;
 import Commands.LabWorkCmp;
+import Commands.Save;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -12,18 +13,14 @@ import java.util.HashSet;
 public class ServerCollectionManager {
     private LocalDate localDate;
     private HashSet<LabWork> labWorks;
-    private CollectionData collectionData;
     private String env;
+    Save save = new Save();
 
     public ServerCollectionManager(String env){
         this.env=env;
         labWorks = new HashSet<>();
         localDate = LocalDate.now();
-
-        LabWorkCmp cmp = new LabWorkCmp();
-        labWorks.stream().sorted((Comparator<? super LabWork>) cmp);
-
-        collectionData =new CollectionData(labWorks);
+        save.importCollection();
     }
     public String  ExecuteCommand(Command command){
         return command.execute(labWorks);

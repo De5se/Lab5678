@@ -33,10 +33,6 @@ public class Command implements Serializable {
         return Objects.hash(name, description);
     }
 
-    public String getName(){
-        return name;
-    }
-
     public String execute(HashSet<LabWork> labWorks){
         return "";
     }

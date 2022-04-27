@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Client">
+    <output-path>$PROJECT_DIR$/out/artifacts/Client</output-path>
+    <root id="archive" name="5lab.jar">
+      <element id="module-output" name="5lab" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Telegram Desktop/commons-collections4-4.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Telegram Desktop/commons-text-1.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Telegram Desktop/commons-beanutils-1.9.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Telegram Desktop/commons-logging-1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/programms/ITMO/opencsv-5.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Telegram Desktop/commons-lang3-3.12.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

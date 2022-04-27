@@ -2,7 +2,9 @@ package CollectionClasses;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class Coordinates {
+import java.io.Serializable;
+
+public class Coordinates implements Serializable {
     @CsvBindByName
     private Long x; //Поле не может быть null
     @CsvBindByName

@@ -8,12 +8,12 @@ public class RemoveGreater extends Command {
     private LabWork labWork;
 
     public RemoveGreater(LabWork labWork) {
-        super("remove_by_id", "удалить из коллекции все элементы, превышающие заданный");
+        super("remove_greater", "удалить из коллекции все элементы, превышающие заданный");
         this.labWork = labWork;
     }
 
     public RemoveGreater() {
-        super("remove_by_id", "удалить из коллекции все элементы, превышающие заданный");
+        super("remove_greater", "удалить из коллекции все элементы, превышающие заданный");
     }
 
     LabWorkCmp labWorkCmp = new LabWorkCmp();

@@ -13,24 +13,24 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 
 public class Save extends Command {
     public Save() {
         super("save", "сохранить коллекцию в файл");
     }
 
-    private Scanner scanner = new Scanner(System.in);
     private String fileName;
 
     public void setFileName(String fileName){
         this.fileName = fileName;
     }
 
-    public void importCollection(HashSet<LabWork> labWorks) {
+    public HashSet<LabWork> importCollection() {
+        HashSet<LabWork> labWorks = new HashSet<LabWork>();
+        
         if (fileName == null){
             System.out.println("Путь к файлу не задан");
-            return;
+            return labWorks;
         }
 
         try (CSVReader csvReader = new CSVReader(new FileReader(fileName))) {
@@ -42,6 +42,7 @@ public class Save extends Command {
             catch (ValueException e){
             System.out.println("Неверные значения в файле!");
         }
+        return labWorks;
     }
 
     public void save(HashSet<LabWork> labWorks){

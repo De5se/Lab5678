@@ -1,6 +1,8 @@
 package CollectionClasses;
 
-public enum Difficulty {
+import java.io.Serializable;
+
+public enum Difficulty implements Serializable {
     VERY_EASY,
     EASY,
     INSANE;

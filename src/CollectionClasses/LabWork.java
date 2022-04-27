@@ -4,9 +4,10 @@ import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 import com.opencsv.bean.CsvRecurse;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class LabWork {
+public class LabWork implements Serializable {
     @CsvBindByName
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     @CsvBindByName
@@ -23,7 +24,7 @@ public class LabWork {
     private Discipline discipline; //Поле не может быть null
 
     public LabWork(String name, Coordinates coordinates, Date creationDate, double minimalPoint, Difficulty difficulty, Discipline discipline){
-        this.id = ++Collection.id;
+        this.id = (int) (Math.random() * Integer.MAX_VALUE);
         this.name = name;
         this.coordinates = coordinates;
         this. creationDate = creationDate;

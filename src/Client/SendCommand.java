@@ -15,7 +15,7 @@ public class SendCommand {
 
     public SendCommand() {
         try {
-            socket = new Socket("localhost",3390);
+            socket = new Socket("localhost",1090);
 
             inputStream = new DataInputStream(socket.getInputStream());
             outputStream = new DataOutputStream(socket.getOutputStream());
@@ -35,6 +35,7 @@ public class SendCommand {
         try {
             objectOutputStream.writeObject(command);
             objectOutputStream.flush();
+
             System.out.println(inputStream.readUTF());
         }
         catch (SocketException ex){

@@ -2,10 +2,11 @@ package Commands;
 
 import CollectionClasses.*;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Scanner;
 
-public class InputLabWork{
+public class InputLabWork implements Serializable {
 
     static Scanner scanner = new Scanner(System.in);
 

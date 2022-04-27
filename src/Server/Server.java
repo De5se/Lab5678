@@ -10,7 +10,7 @@ public class Server {
 
     public static void main(String[] args) {
         try {
-            ServerSocket serverSocket = new ServerSocket(3390);
+            ServerSocket serverSocket = new ServerSocket(1090);
             Socket client = serverSocket.accept();
 
             DataInputStream inputStream = new DataInputStream(client.getInputStream());
@@ -23,34 +23,24 @@ public class Server {
             while (!client.isClosed()){
                 Command command = (Command) objectInputStream.readObject();
 
-                if (command.getName().equals("exit")){
-                    outputStream.writeUTF("Отключение клиента");
-                    break;
-                }
-
                 outputStream.writeUTF(serverCollectionManager.ExecuteCommand(command));
                 outputStream.flush();
 
                 if(client.isClosed()){
                     break;
                 }
-
             }
             objectInputStream.close();
             inputStream.close();
             outputStream.close();
             client.close();
-
         }
         catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Невозможно создать сервер");
-
         }
         catch (ClassNotFoundException ex){
             System.out.println("Не удалось найти класс");
-
         }
-
-
     }
 }

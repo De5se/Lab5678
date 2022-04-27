@@ -3,8 +3,6 @@ package Commands;
 import CollectionClasses.*;
 
 import java.util.HashSet;
-import java.util.Scanner;
-
 public class AddIfMin extends Command {
     private LabWork labWorkToAdd;
 

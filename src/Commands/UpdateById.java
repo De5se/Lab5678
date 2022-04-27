@@ -3,7 +3,6 @@ package Commands;
 import CollectionClasses.*;
 
 import java.util.HashSet;
-import java.util.Scanner;
 
 public class UpdateById extends Command {
     private int id;
