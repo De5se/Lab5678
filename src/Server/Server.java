@@ -1,46 +1,43 @@
 package Server;
 
-import Commands.*;
-
 import java.io.*;
 import java.net.Socket;
 import java.net.ServerSocket;
 
 public class Server {
+    private static final int PORT = 1090;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
+        Class.forName("org.postgresql.Driver");
+
         try {
-            ServerSocket serverSocket = new ServerSocket(1090);
-            Socket client = serverSocket.accept();
+            ServerCollectionManager collectionManager = new ServerCollectionManager();
+            DatabaseHandler dataBaseHandler = new DatabaseHandler("jdbc:postgresql://localhost:1093/studs","---","---");
+            dataBaseHandler.readDataBase(collectionManager.getLabWorks());
+            ServerSocket serverSocket=new ServerSocket(PORT);
+            new ServerCommands();
 
-            DataInputStream inputStream = new DataInputStream(client.getInputStream());
-            DataOutputStream outputStream = new DataOutputStream(client.getOutputStream());
-            ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
-            ServerCollectionManager serverCollectionManager = new ServerCollectionManager(System.getenv("JAVA_HOME"));
+            System.out.println("Сервер запущен");
 
-            System.out.println("Подключился новый пользователь");
-
-            while (!client.isClosed()){
-                Command command = (Command) objectInputStream.readObject();
-
-                outputStream.writeUTF(serverCollectionManager.ExecuteCommand(command));
-                outputStream.flush();
-
-                if(client.isClosed()){
-                    break;
+            try {
+                while (true){
+                    Socket client = serverSocket.accept();
+                    System.out.println("Присоединился новый пользователь");
+                    System.out.println("Данные нового пользователя " + client.getInetAddress());
+                    new AddClient(client, collectionManager.getLabWorks(), dataBaseHandler);
                 }
             }
-            objectInputStream.close();
-            inputStream.close();
-            outputStream.close();
-            client.close();
+            catch (IOException ex){
+                System.out.println("Ошибка присоединения нового пользователя");
+            }
+            finally {
+                serverSocket.close();
+            }
         }
-        catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Невозможно создать сервер");
+        catch (IOException ex){
+            System.out.println("Сервер не может быть запущен. Порт занят");
+            System.exit(1);
         }
-        catch (ClassNotFoundException ex){
-            System.out.println("Не удалось найти класс");
-        }
+
     }
 }

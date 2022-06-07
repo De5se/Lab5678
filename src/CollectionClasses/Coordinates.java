@@ -16,6 +16,13 @@ public class Coordinates implements Serializable {
     }
 
     public Coordinates(){
+    }
 
+    public Long getX(){
+        return x;
+    }
+
+    public Integer getY(){
+        return y;
     }
 }

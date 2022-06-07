@@ -9,6 +9,8 @@ import java.util.Objects;
 public class Command implements Serializable {
     private final String name;
     private final String description;
+    private LabWork labWork;
+    private Long arg;
 
     public Command(String name, String description){
         this.name = name;
@@ -34,6 +36,26 @@ public class Command implements Serializable {
     }
 
     public String execute(HashSet<LabWork> labWorks){
-        return "";
+        return "Команда пуста";
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void SetLabWork(LabWork labWork){
+        this.labWork = labWork;
+    }
+
+    public LabWork getLabWork(){
+        return labWork;
+    }
+
+    public void setArg(Long arg) {
+        this.arg = arg;
+    }
+
+    public long getArg(){
+        return arg;
     }
 }

@@ -3,14 +3,13 @@ package Client;
 import CollectionClasses.LabWork;
 import Commands.*;
 
-import java.util.Scanner;
-
 import static java.lang.System.exit;
 
 public class ClientCommandManager {
     private final SendCommand sendCommand;
 
-    //commands list for help
+    //commands
+    Help help;
     Info info = new Info();
     Show show = new Show();
     Add add = new Add();
@@ -18,83 +17,111 @@ public class ClientCommandManager {
     RemoveById removeById = new RemoveById();
     Clear clear = new Clear();
     ExecuteScript executeScript = new ExecuteScript();
-    Exit exit = new Exit();
     AddIfMin addIfMin = new AddIfMin();
     RemoveGreater removeGreater = new RemoveGreater();
     RemoveLower removeLower = new RemoveLower();
     SumOfMinimalPoint sumOfMinimalPoint = new SumOfMinimalPoint();
     FilterByMinimalPoint filterByMinimalPoint = new FilterByMinimalPoint();
 
-    Command[] commands = new Command[]{info, show, add, updateById, removeById, clear, executeScript, exit,
-            addIfMin, removeGreater, removeLower, sumOfMinimalPoint, filterByMinimalPoint};
-
     public ClientCommandManager(){
         sendCommand = new SendCommand();
+        help = new Help();
     }
 
-    Scanner scanner = new Scanner(System.in);
+    public void processingCommand(String[] userCommand){
+        switch (userCommand[0]){
+            case "add":
+                add.SetLabWork(InputLabWork.InputLabWork());
+                break;
+            case "add_if_min":
+                addIfMin.SetLabWork(InputLabWork.InputLabWork());
+                break;
+            case "remove_by_id":
+                try {
+                    removeById.setArg(Long.parseLong(userCommand[1]));
+                }
+                catch (NumberFormatException ex){
+                    System.out.println("Неверный формат id");
+                }
+                catch (IndexOutOfBoundsException ex){
+                    System.out.println("Отсутствует id");
+                }
+                break;
+            case "count_less_than_refundable":
+                sumOfMinimalPoint.setArg(Long.parseLong(userCommand[1]));
+                break;
+            case "update":
+                try {
+                    long user_id = Long.parseLong(userCommand[1]);
+                    updateById.SetLabWork(InputLabWork.InputLabWork());
+                    updateById.setArg(user_id);
+                }
+                catch (NumberFormatException ex){
+                    System.out.println("Неверное значение id");
+                }
+                break;
+        }
 
-    public void SendCommand(String[] command){
+        if(GetCommand(userCommand[0]) != null) {
+            System.out.println("Отправка команды");
+            sendCommand.sendingCommand(GetCommand(userCommand[0]));
+        }
+        else{
+            System.out.println("Если не знаете комманд, то введите help.");
+        }
+    }
+
+    private Command GetCommand(String command){
         Command clientCommand;
 
-        switch (command[0]) {
+        switch (command) {
             case "help" :
-                clientCommand = new Help(commands);
+                clientCommand = help;
                 break;
             case "info" :
-                clientCommand = new Info();
+                clientCommand = info;
                 break;
             case "show" :
-                clientCommand = new Show();
+                clientCommand = show;
                 break;
             case "add" :
                 LabWork labWork = InputLabWork.InputLabWork();
-                clientCommand = new Add(labWork);
+                add.SetLabWork(labWork);
+                clientCommand = add;
                 break;
             case "update" :
-                System.out.println("Введите id: ");
-                int id = scanner.nextInt();
-                LabWork labWork1 = InputLabWork.InputLabWork();
-                clientCommand = new UpdateById(id, labWork1);
+                clientCommand = updateById;
                 break;
             case "remove_by_id" :
-                System.out.println("Введите id: ");
-                int id1 = scanner.nextInt();
-                clientCommand = new RemoveById(id1);
+                clientCommand = removeById;
                 break;
             case "clear" :
-                clientCommand = new Clear();
+                clientCommand = clear;
                 break;
             case "execute_script" :
-                clientCommand = new ExecuteScript();
+                clientCommand = executeScript;
                 break;
             case "exit" :
                 System.out.println("Пока");
                 exit(0);
             case "add_if_min" :
-                LabWork labWork2 = InputLabWork.InputLabWork();
-                clientCommand = new AddIfMin(labWork2);
+                clientCommand = addIfMin;
                 break;
             case "remove_greater" :
-                LabWork labWork3 = InputLabWork.InputLabWork();
-                clientCommand = new RemoveGreater(labWork3);
+                clientCommand = removeGreater;
                 break;
             case "remove_lower" :
-                LabWork labWork4 = InputLabWork.InputLabWork();
-                clientCommand = new RemoveLower(labWork4);
+                clientCommand = removeLower;
                 break;
             case "sum_of_minimal_point" :
-                clientCommand = new SumOfMinimalPoint();
+                clientCommand = sumOfMinimalPoint;
                 break;
             case "filter_by_minimal_point" :
-                System.out.println("Введите minimal Point: ");
-                double minimalPoint = scanner.nextDouble();
-                clientCommand = new FilterByMinimalPoint(minimalPoint);
+                clientCommand = filterByMinimalPoint;
                 break;
-            default :
-                System.out.println("Если не знаете комманд, то введите help.");
-                return;
+            default:
+                return null;
         }
-        sendCommand.Sender(clientCommand);
+        return clientCommand;
     }
 }

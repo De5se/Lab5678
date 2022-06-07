@@ -10,7 +10,7 @@ public class InputLabWork implements Serializable {
 
     static Scanner scanner = new Scanner(System.in);
 
-    public static  LabWork InputLabWork()
+    public static LabWork InputLabWork()
     {
         String name = null;
         System.out.println("Введите имя: ");
@@ -91,7 +91,7 @@ public class InputLabWork implements Serializable {
 
         Discipline discipline = new Discipline(disciplineName, lectureHours);
 
-        return new LabWork(name, coordinates, date, minimalPoint, difficulty, discipline);
+        return new LabWork(0, name, coordinates, date, minimalPoint, difficulty, discipline);
 
     }
 }

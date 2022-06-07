@@ -17,4 +17,12 @@ public class Discipline implements Serializable {
     public Discipline(){
 
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getLectureHours() {
+        return lectureHours;
+    }
 }

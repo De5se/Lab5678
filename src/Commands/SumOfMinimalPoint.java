@@ -15,7 +15,7 @@ public class SumOfMinimalPoint extends Command {
         double sumOfMinimalPoint = 0;
 
         for (LabWork it : labWorks){
-            sumOfMinimalPoint += it.GetMinimalPoint();
+            sumOfMinimalPoint += it.getMinimalPoint();
         }
 
         return String.valueOf(sumOfMinimalPoint);

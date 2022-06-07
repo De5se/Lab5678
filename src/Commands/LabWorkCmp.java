@@ -6,6 +6,6 @@ import java.io.Serializable;
 
 public class LabWorkCmp implements Serializable {
     public boolean isMore(LabWork a, LabWork b) {
-        return a.GetMinimalPoint() > b.GetMinimalPoint();
+        return a.getMinimalPoint() > b.getMinimalPoint();
     }
 }

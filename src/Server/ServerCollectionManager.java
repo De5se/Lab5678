@@ -11,19 +11,13 @@ import java.util.Comparator;
 import java.util.HashSet;
 
 public class ServerCollectionManager {
-    private LocalDate localDate;
     private HashSet<LabWork> labWorks;
-    private String env;
-    Save save = new Save();
 
-    public ServerCollectionManager(String env){
-        this.env=env;
+    public ServerCollectionManager(){
         labWorks = new HashSet<>();
-        localDate = LocalDate.now();
-        save.importCollection();
-    }
-    public String  ExecuteCommand(Command command){
-        return command.execute(labWorks);
     }
 
+    public HashSet<LabWork> getLabWorks(){
+        return labWorks;
+    }
 }

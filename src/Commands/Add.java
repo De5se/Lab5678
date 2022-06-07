@@ -7,17 +7,13 @@ import java.util.HashSet;
 public class Add extends Command {
     private LabWork labWorkToAdd;
 
-    public Add(LabWork labWorkToAdd) {
-        super("add", "добавить новый элемент в коллекцию");
-        this.labWorkToAdd = labWorkToAdd;
-    }
     public Add(){
         super("add", "добавить новый элемент в коллекцию");
     }
 
     public String execute(HashSet<LabWork> labWorks)
     {
-        labWorks.add(labWorkToAdd);
+        labWorks.add(this.getLabWork());
         return "Коллекция добавлена";
     }
 }

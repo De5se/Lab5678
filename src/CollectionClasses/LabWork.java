@@ -23,8 +23,8 @@ public class LabWork implements Serializable {
     @CsvRecurse
     private Discipline discipline; //Поле не может быть null
 
-    public LabWork(String name, Coordinates coordinates, Date creationDate, double minimalPoint, Difficulty difficulty, Discipline discipline){
-        this.id = (int) (Math.random() * Integer.MAX_VALUE);
+    public LabWork(int id, String name, Coordinates coordinates, Date creationDate, double minimalPoint, Difficulty difficulty, Discipline discipline){
+        this.id = id;
         this.name = name;
         this.coordinates = coordinates;
         this. creationDate = creationDate;
@@ -46,13 +46,29 @@ public class LabWork implements Serializable {
                 '}';
     }
 
-    public double GetMinimalPoint(){
-        return minimalPoint;
-    }
-
     public int GetId(){
         return id;
     }
+    public String getName(){return name;}
+
+    public Coordinates getCoordinates(){return coordinates;}
+
+    public Date getCreationDate(){
+        return creationDate;
+    }
+
+    public double getMinimalPoint(){
+        return minimalPoint;
+    }
+
+    public Difficulty getDifficulty(){
+        return difficulty;
+    }
+
+    public Discipline getDiscipline(){
+        return discipline;
+    }
+
 
     public LabWork(){
 

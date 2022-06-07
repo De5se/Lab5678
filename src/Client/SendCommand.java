@@ -1,6 +1,7 @@
 package Client;
 
 import Commands.Command;
+import SystemCommands.Message;
 
 import java.io.*;
 import java.net.Socket;
@@ -8,41 +9,72 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class SendCommand {
+    private final int PORT = 1090;
     private Socket socket;
-    private DataInputStream inputStream;
-    private DataOutputStream outputStream;
     private ObjectOutputStream objectOutputStream;
+    private ObjectInputStream objectInputStream;
+    protected  Authorization authorization;
+    private Message message;
 
-    public SendCommand() {
-        try {
-            socket = new Socket("localhost",1090);
-
-            inputStream = new DataInputStream(socket.getInputStream());
-            outputStream = new DataOutputStream(socket.getOutputStream());
-            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-        }
-        catch (UnknownHostException ex){
-            System.out.println("Неверное значение порта");
-        }
-        catch (IOException ex){
-            System.out.println("Сервер закрыт, попробуйте позже");
-            System.exit(1);
-        }
-
+    public SendCommand(){
+        newConnection(0);
+        message=new Message();
     }
 
-    public void Sender(Command command){
+    public void sendingCommand(Command command){
+
         try {
+            objectOutputStream.reset();
             objectOutputStream.writeObject(command);
             objectOutputStream.flush();
+            if(command.getName().equals("exit")){
+                System.out.println("Отключение программы");
+                System.exit(1);
+            }
 
-            System.out.println(inputStream.readUTF());
-        }
-        catch (SocketException ex){
-            System.out.println("Сервер отключен");
+            message = (Message)objectInputStream.readObject();
+            System.out.println("1");
+            System.out.println(message.getMessage());
         }
         catch (IOException ex){
-            System.out.println("Невозможна отправка");
+            System.out.println("Ошибка подсоединения к серверу");
+            newConnection(5000);
         }
+        catch (NullPointerException exception){
+            newConnection(5000);
+        }
+        catch (ClassNotFoundException ex){
+            System.out.println("Получен неизвсетный объект");
+        }
+    }
+
+    public void newConnection(int sleepTime){
+        System.out.println("Подключение к серверу");
+
+        try {
+            Thread.sleep(sleepTime);
+            socket = new Socket("localhost",PORT);
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            System.out.println("Подключение произошло успешно");
+            authorization=new Authorization(objectOutputStream,objectInputStream);
+            authorization.authorizationToDataBase();
+        }
+        catch (InterruptedException ex){
+            System.out.println("Ошибка прерывания");
+        }
+        catch (UnknownHostException ex){
+            System.out.println("Неизвестный хост");
+            System.exit(1);
+        }
+        catch (SocketException ex){
+            System.out.println("Сервер не доступен");
+            newConnection(5000);
+        }
+        catch (IOException ex){
+            System.out.println("Ошибка при соединении с сервером");
+            newConnection(5000);
+        }
+
     }
 }
